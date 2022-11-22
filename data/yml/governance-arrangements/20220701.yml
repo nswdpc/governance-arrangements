@@ -1,0 +1,123 @@
+---
+name: 'nswgov-clusters-agencies'
+version: 20220701
+supersedes: 20220401
+created: '2022-07-01'
+fromdate: '2022-07-01'
+title: 'Governance Arrangements Chart from 1 July 2022'
+author: 'NSW Department of Premier and Cabinet'
+source: 'https://www.dpc.nsw.gov.au/assets/dpc-nsw-gov-au/Governance-Arrangements-Chart.pdf'
+description: 'Please note: This chart contains information about Ministers, State-owned corporations established under Schedule 5 to the State Owned Corporations Act 1989 (NSW), and those NSW Government agencies that are established under Schedule 1 to the Government Sector Employment Act 2013 (NSW). There are a range of other NSW statutory bodies and statutory positions that
+are established under other Acts. Information on which portfolio statutory bodies and positions holders are part of can be obtained by consulting the Allocation of the Administration of Acts and the legislation that establishes the statutory body or officer (available at www.legislation.nsw.gov.au). The NSW legislation website is the primary source of information about the legal
+structure of the NSW Government.'
+clusters:
+  'Premier and Cabinet':
+    departments:
+      - 'Department of Premier and Cabinet'
+    executive_agencies:
+      - 'Parliamentary Counsel''s Office'
+    separate_agencies:
+      - 'Ombudsman''s Office'
+      - 'Public Service Commission'
+      - 'New South Wales Electoral Commission Staff Agency'
+      - 'Office of the Law Enforcement Conduct Commission'
+      - 'Office of the Inspector of the Law Enforcement Conduct Commission'
+  'Enterprise, Investment and Trade':
+    departments:
+      - 'Department of Enterprise, Investment and Trade'
+    executive_agencies:
+      - 'Institute of Sport Staff Agency'
+      - 'Office of Sport'
+      - 'Venues NSW Staff Agency'
+      - 'Destination NSW Staff Agency'
+      - 'Western Parkland City Authority Staff Agency'
+      - 'Art Gallery of NSW Trust Staff Agency'
+      - 'Australian Museum Trust Staff Agency'
+      - 'Library Council of NSW Staff Agency'
+      - 'Trustees of the Museum of Applied Arts and Sciences Staff Agency'
+      - 'Sydney Opera House Trust Staff Agency'
+      - 'State Archives and Records Authority of New South Wales Staff Agency'
+    separate_agencies:
+      - 'Office of the Greyhound Welfare and Integrity Commission'
+  'Treasury':
+    departments:
+      - 'Treasury'
+    executive_agencies:
+      - 'SAS Trustee Corporation Staff Agency'
+  'Customer Service':
+    departments:
+      - 'Department of Customer Service'
+    executive_agencies:
+      - 'Service NSW'
+    separate_agencies:
+      - 'Information and Privacy Commission'
+      - 'Independent Pricing and Regulatory Tribunal Staff Agency'
+      - 'Office of the Independent Review Officer'
+  'Planning and Environment':
+    departments:
+      - 'Department of Planning and Environment'
+    executive_agencies:
+      - 'Natural Resources Commission Staff Agency'
+    separate_agencies:
+      - 'Environment Protection Authority Staff Agency'
+      - 'Office of the Independent Planning Commission'
+    corporations:
+      - 'Water NSW'
+      - 'Essential Energy'
+      - 'Hunter Water Corporation'
+      - 'Sydney Water Corporation'
+      - 'Landcom'
+  'Transport and Infrastructure':
+    departments:
+      - 'Department of Transport'
+    executive_agencies:
+      - 'Greater Sydney Commission Staff Agency'
+      - 'Infrastructure NSW Staff Agency'
+    other_services:
+      - 'Transport Service'
+    corporations:
+      - 'Newcastle Port Corporation'
+      - 'Transport Asset Holding Entity of New South Wales'
+  'Health':
+    departments:
+      - 'Ministry of Health'
+    executive_agencies:
+      - 'Health Professional Councils Authority Office'
+      - 'Mental Health Commission Staff Agency'
+    other_services:
+      - 'NSW Health Service'
+    separate_agencies:
+      - 'Health Care Complaints Commission Staff Agency'
+  'Education':
+    departments:
+      - 'Department of Education'
+    other_services:
+      - 'Teaching Service'
+    separate_agencies:
+      - 'TAFE Commission (Senior Executives) Staff Agency'
+      - 'NSW Education Standards Authority Staff Agency'
+  'Stronger Communities':
+    departments:
+      - 'Department of Communities and Justice'
+    executive_agencies:
+      - 'Resilience NSW'
+      - 'Crown Solicitor''s Office'
+      - 'Fire and Rescue NSW'
+      - 'Office of the NSW Rural Fire Service'
+      - 'Office of the NSW State Emergency Service'
+      - 'Multicultural NSW Staff Agency'
+    other_services:
+      - 'NSW Police Force'
+    separate_agencies:
+      - 'Office of the Director of Public Prosecutions'
+      - 'Legal Aid Commission Staff Agency'
+      - 'NSW Crime Commission Staff Agency'
+      - 'Office of the Children''s Guardian'
+      - 'Office of the Ageing and Disability Commissioner'
+  'Regional NSW':
+    departments:
+      - 'Department of Regional NSW'
+    executive_agencies:
+      - 'Local Land Services Staff Agency'
+    corporations:
+      - 'Forestry Corporation of NSW'
