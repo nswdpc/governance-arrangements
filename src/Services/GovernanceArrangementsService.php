@@ -16,7 +16,7 @@ class GovernanceArrangementsService {
 
     /**
      * Version in use for this instance
-     * @var float|null
+     * @var string|float|null
      */
     protected $dataVersion = null;
 
@@ -51,14 +51,17 @@ class GovernanceArrangementsService {
     /**
      * To get an instance of this class, call GovernanceArrangementsService::create( VERSION );
      */
-    private function __construct(float $dataVersion) {
+    private function __construct($dataVersion) {
+        if(!$dataVersion) {
+            throw new \Exception("Please provide a valid version");
+        }
         $this->dataVersion = $dataVersion;
     }
 
     /**
      * Return an instance of this class locked to the provided data version
      */
-    public static function create(float $dataVersion) : self {
+    public static function create($dataVersion) : self {
         return new static($dataVersion);
     }
 
@@ -75,7 +78,7 @@ class GovernanceArrangementsService {
      * Return the filesystem path to a YML data file
      * @throws \Exception
      */
-    public function getDataPath(float $dataVersion) : string {
+    public function getDataPath($dataVersion) : string {
         // the path is relative to the current file
         $path = dirname(__FILE__)
                     . '/../../'
