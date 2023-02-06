@@ -190,7 +190,7 @@ class GovernanceArrangementsService {
 
     /**
      * Give an agency, find the cluster it is in
-     * @param string $cluster e.g 'Treasury'
+     * @param string $agency e.g 'Treasury'
      */
     public function getClusterFromAgency(string $agency) : string {
         if(!$agency) {
