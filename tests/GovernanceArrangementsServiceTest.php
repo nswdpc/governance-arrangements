@@ -16,7 +16,7 @@ abstract class GovernanceArrangementsServiceTest extends TestCase {
     protected $serviceInstance = null;
 
     /**
-     * @var float|nullS
+     * @var float|null
      */
     protected $dataVersion = null;
 
