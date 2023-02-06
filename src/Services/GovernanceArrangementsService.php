@@ -51,7 +51,7 @@ class GovernanceArrangementsService {
     /**
      * To get an instance of this class, call GovernanceArrangementsService::create( VERSION );
      */
-    private function __construct($dataVersion) {
+    final public function __construct($dataVersion) {
         if(!$dataVersion) {
             throw new \Exception("Please provide a valid version");
         }
