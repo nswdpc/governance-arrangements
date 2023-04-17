@@ -6,11 +6,11 @@ The data can be used to represent form controls and lists of governance data.
 
 ### Usage
 
-Load the v20220701 dataset
+Load the v20230405 dataset
 
 ```php
 // @var GovernanceArrangementsService
-$service = GovernanceArrangementsService::create(20220701);
+$service = GovernanceArrangementsService::create(20230405);
 // @var array
 $data = $service->getData();
 ```
