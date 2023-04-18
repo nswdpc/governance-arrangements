@@ -47,7 +47,7 @@ clusters:
       - 'Sydney Water Corporation'
   'Jobs and Tourism':
     departments:
-      - 'Department of Enterprise, Investment and Trade':
+      - 'Department of Enterprise, Investment and Trade'
     executive_agencies:
       - 'Venues NSW Staff Agency'
       - 'Destination NSW Staff Agency'
