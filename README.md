@@ -1,16 +1,16 @@
 # NSW Governance Arrangements
 
-This module provides some base data files and a service class to load data from a YAML representation of the NSWDPC Governance Arrangements Chart from those files into data stuctures and return them.
+This module provides some base data files and a service class to load data from a YAML representation of The Cabinet Office NSW Governance Arrangements Chart from those files into data stuctures and return them.
 
 The data can be used to represent form controls and lists of governance data.
 
 ### Usage
 
-Load the v20230405 dataset
+Load the v20230928 dataset
 
 ```php
 // @var GovernanceArrangementsService
-$service = GovernanceArrangementsService::create(20230405);
+$service = GovernanceArrangementsService::create(20230928);
 // @var array
 $data = $service->getData();
 ```
@@ -41,7 +41,7 @@ composer require nswdpc/governance-arrangements
 
 ## Configuration
 
-+ 
++
 
 ## Maintainers
 
