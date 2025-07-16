@@ -15,9 +15,6 @@
             "role": "Developer"
         }
     ],
-    "support": {
-        "key" : "value"
-    },
     "require": {
         "php" : "^7.4|^8",
         "symfony/yaml": ">=3"
