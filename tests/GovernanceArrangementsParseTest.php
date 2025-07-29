@@ -4,12 +4,11 @@ namespace NSWDPC\GovernanceArrangements\Test;
 
 use NSWDPC\GovernanceArrangements\Services\GovernanceArrangementsService;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Yaml\Parser as YamlParser;
 
-require_once( __DIR__ . '/../src/Services/GovernanceArrangementsService.php' );
+require_once(__DIR__ . '/../src/Services/GovernanceArrangementsService.php');
 
-class GovernanceArrangementsParseTest extends TestCase {
-
+class GovernanceArrangementsParseTest extends TestCase
+{
     /**
      * @var array
      */
@@ -23,8 +22,8 @@ class GovernanceArrangementsParseTest extends TestCase {
         parent::setUp();
 
         $sourceDirectory = GovernanceArrangementsService::$sourceDirectory;
-        $sourcePath = realpath( __DIR__ . "/../" . $sourceDirectory );
-        if($sourcePath === '' || $sourcePath === '0' || $sourcePath === false || !is_readable($sourcePath)) {
+        $sourcePath = realpath(__DIR__ . "/../" . $sourceDirectory);
+        if ($sourcePath === '' || $sourcePath === '0' || $sourcePath === false || !is_readable($sourcePath)) {
             throw new \Exception("source path  {$sourceDirectory} is not readable");
         }
 
@@ -39,8 +38,9 @@ class GovernanceArrangementsParseTest extends TestCase {
         parent::tearDown();
     }
 
-    public function testServiceCreationFromFile(): void {
-        foreach($this->ymlFiles as $file) {
+    public function testServiceCreationFromFile(): void
+    {
+        foreach ($this->ymlFiles as $file) {
             $dataVersion = basename((string) $file, ".yml");
             $service = GovernanceArrangementsService::create($dataVersion);
             $data = $service->getData();

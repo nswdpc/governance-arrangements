@@ -2,13 +2,13 @@
 
 namespace NSWDPC\GovernanceArrangements\Test;
 
-require_once( __DIR__ . '/GovernanceArrangementsServiceTest.php' );
+require_once(__DIR__ . '/GovernanceArrangementsServiceTest.php');
 
 /**
  * Test for 20250516
  */
-class v20250516Test extends GovernanceArrangementsServiceTest {
-
+class v20250516Test extends GovernanceArrangementsServiceTest
+{
     /**
      * @var float
      */
@@ -19,21 +19,24 @@ class v20250516Test extends GovernanceArrangementsServiceTest {
      */
     protected $totalClusters = 11;
 
-    public function testClusterDepartments(): void {
+    public function testClusterDepartments(): void
+    {
         $this->serviceInstance->getData();
         $clusterData = $this->serviceInstance->getCluster('Premier and Cabinet');
         $this->assertEquals(2, count($clusterData['departments']));
     }
 
-    public function testClusterFromDepartment(): void {
+    public function testClusterFromDepartment(): void
+    {
         $this->serviceInstance->getData();
         $clusterName = $this->serviceInstance->getClusterFromDepartment("Premier's Department");
         $this->assertEquals('Premier and Cabinet', $clusterName);
     }
 
-    public function testGetClusterFromAgency(): void {
+    public function testGetClusterFromAgency(): void
+    {
         $this->serviceInstance->getData();
         $cluster = $this->serviceInstance->getClusterFromAgency("Premier's Department");
-        $this->assertEquals('Premier and Cabinet', $cluster );
+        $this->assertEquals('Premier and Cabinet', $cluster);
     }
 }
