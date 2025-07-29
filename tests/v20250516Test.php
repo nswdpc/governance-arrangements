@@ -2,7 +2,7 @@
 
 namespace NSWDPC\GovernanceArrangements\Test;
 
-require_once( dirname(__FILE__) . '/GovernanceArrangementsServiceTest.php' );
+require_once( __DIR__ . '/GovernanceArrangementsServiceTest.php' );
 
 /**
  * Test for 20250516
@@ -19,21 +19,21 @@ class v20250516Test extends GovernanceArrangementsServiceTest {
      */
     protected $totalClusters = 11;
 
-    public function testClusterDepartments() {
-        $data = $this->serviceInstance->getData();
+    public function testClusterDepartments(): void {
+        $this->serviceInstance->getData();
         $clusterData = $this->serviceInstance->getCluster('Premier and Cabinet');
         $this->assertEquals(2, count($clusterData['departments']));
     }
 
-    public function testClusterFromDepartment() {
-        $data = $this->serviceInstance->getData();
-        $clusterName = $this->serviceInstance->getClusterFromDepartment('Premier\'s Department');
+    public function testClusterFromDepartment(): void {
+        $this->serviceInstance->getData();
+        $clusterName = $this->serviceInstance->getClusterFromDepartment("Premier's Department");
         $this->assertEquals('Premier and Cabinet', $clusterName);
     }
 
-    public function testGetClusterFromAgency() {
-        $data = $this->serviceInstance->getData();
-        $cluster = $this->serviceInstance->getClusterFromAgency('Premier\'s Department');
+    public function testGetClusterFromAgency(): void {
+        $this->serviceInstance->getData();
+        $cluster = $this->serviceInstance->getClusterFromAgency("Premier's Department");
         $this->assertEquals('Premier and Cabinet', $cluster );
     }
 }

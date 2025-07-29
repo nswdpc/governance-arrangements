@@ -18,7 +18,7 @@ class GovernanceArrangementsService {
      * Version in use for this instance
      * @var string|float|null
      */
-    protected $dataVersion = null;
+    protected $dataVersion;
 
     /**
      * The data sourced from the yml file
@@ -55,6 +55,7 @@ class GovernanceArrangementsService {
         if(!$dataVersion) {
             throw new \Exception("Please provide a valid version");
         }
+
         $this->dataVersion = $dataVersion;
     }
 
@@ -78,16 +79,17 @@ class GovernanceArrangementsService {
      * Return the filesystem path to a YML data file
      * @throws \Exception
      */
-    public function getDataPath($dataVersion) : string {
+    public function getDataPath(string $dataVersion) : string {
         // the path is relative to the current file
-        $path = dirname(__FILE__)
+        $path = __DIR__
                     . '/../../'
                     . self::$sourceDirectory
                     . '/' . $dataVersion . '.yml';
         $realPath = realpath($path);
-        if(!$realPath || !is_readable($realPath)) {
+        if($realPath === '' || $realPath === false || !is_readable($realPath)) {
             throw new \Exception("Path '{$path}' not found or readable for {$this->dataVersion} request");
         }
+
         return $realPath;
     }
 
@@ -120,6 +122,7 @@ class GovernanceArrangementsService {
                 if(empty($data['version']) || $data['version'] != $this->dataVersion) {
                     throw new \Exception("Version mismatch between requested and that found in source file");
                 }
+
                 $this->data[ $this->dataVersion ] = $data;
             }
         }
@@ -127,6 +130,7 @@ class GovernanceArrangementsService {
         if(empty($this->data[ $this->dataVersion ])) {
             throw new \Exception("Source data is empty");
         }
+
         return $this->data[ $this->dataVersion ];
     }
 
@@ -144,17 +148,12 @@ class GovernanceArrangementsService {
      * Return the meta data from a YMLfile
      */
     public function getMetaData() : array {
-        $meta = [];
         $data = $this->getData();
-
-        $intersect = array_filter(
+        return array_filter(
             $data,
-            function($k) {
-                return in_array($k, self::getMetaKeys() );
-            },
+            fn($k): bool => in_array($k, self::getMetaKeys() ),
             ARRAY_FILTER_USE_KEY
         );
-        return $intersect;
     }
 
     /**
@@ -163,7 +162,7 @@ class GovernanceArrangementsService {
      */
     public function getClusters() : array {
         $data = $this->getData();
-        return !empty($data['clusters']) ? $data['clusters'] : [];
+        return empty($data['clusters']) ? [] : $data['clusters'];
     }
 
     /**
@@ -176,6 +175,7 @@ class GovernanceArrangementsService {
         if(isset($clusters[$cluster])) {
             return $clusters[$cluster];
         }
+
         throw new \Exception("Cluster {$cluster} not found");
     }
 
@@ -193,18 +193,18 @@ class GovernanceArrangementsService {
      * @param string $agency e.g 'Treasury'
      */
     public function getClusterFromAgency(string $agency) : string {
-        if(!$agency) {
+        if($agency === '') {
             return '';
         }
+
         $this->getAllAgencies();
-        return isset($this->agencies[$agency]) ? $this->agencies[$agency] : '';
+        return $this->agencies[$agency] ?? '';
     }
 
     /**
      * Optionally create and return the cluster/agency data structure
      * The return value is suitable for use in a select field with
      * optgroup / option child elements
-     * @return array
      */
     public function getClusterAgencies() : array {
         $this->getAllAgencies();
@@ -217,13 +217,14 @@ class GovernanceArrangementsService {
      * @param bool $force whether to force
      */
     public function getAllAgencies(bool $force = false) : array {
-        if(!empty($this->agencies) && !$force) {
+        if($this->agencies !== [] && !$force) {
             return $this->agencies;
         }
 
         // get all clusters
         $clusters = $this->getClusters();
-        $this->agencies = $this->clusterAgencies = [];
+        $this->agencies = [];
+        $this->clusterAgencies = [];
         foreach($clusters as $clusterName => $meta) {
 
             // meta is an array with a key ( org type ) values are the names of the orgs in that type
@@ -232,7 +233,7 @@ class GovernanceArrangementsService {
             // Store cluster keyed by clustername, values are agencies (orgs)
             array_walk(
                 $meta,
-                function( array $orgs, string $orgType ) use ($clusterName)  {
+                function( array $orgs, string $orgType ) use ($clusterName): void  {
                     foreach($orgs as $org) {
                         $this->clusterAgencies[ $clusterName ][ $org ] = $org;
                         // NB this assumes $org is unique

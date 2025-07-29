@@ -2,7 +2,7 @@
 
 namespace NSWDPC\GovernanceArrangements\Test;
 
-require_once( dirname(__FILE__) . '/GovernanceArrangementsServiceTest.php' );
+require_once( __DIR__ . '/GovernanceArrangementsServiceTest.php' );
 
 /**
  * Test for v20230405

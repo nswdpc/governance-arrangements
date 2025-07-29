@@ -6,24 +6,24 @@ use NSWDPC\GovernanceArrangements\Services\GovernanceArrangementsService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Parser as YamlParser;
 
-require_once( dirname(__FILE__) . '/../src/Services/GovernanceArrangementsService.php' );
+require_once( __DIR__ . '/../src/Services/GovernanceArrangementsService.php' );
 
 abstract class GovernanceArrangementsServiceTest extends TestCase {
 
     /**
      * @var GovernanceArrangementsService
      */
-    protected $serviceInstance = null;
+    protected $serviceInstance;
 
     /**
      * @var float|null
      */
-    protected $dataVersion = null;
+    protected $dataVersion;
 
     /**
      * @var int|null
      */
-    protected $totalClusters = null;
+    protected $totalClusters;
 
     /**
      * @inheritdoc
@@ -42,56 +42,56 @@ abstract class GovernanceArrangementsServiceTest extends TestCase {
         parent::tearDown();
     }
 
-    public function testServiceCreation() {
+    public function testServiceCreation(): void {
         $data = $this->serviceInstance->getData();
         $this->assertEquals($this->dataVersion, $data['version']);
     }
 
-    public function testMetaData() {
+    public function testMetaData(): void {
         $data = $this->serviceInstance->getMetaData();
         $keys = GovernanceArrangementsService::getMetaKeys();
         $this->assertEquals(count($keys), count($data));
     }
 
-    public function testClusters() {
+    public function testClusters(): void {
         $data = $this->serviceInstance->getData();
         $this->assertArrayHasKey('clusters', $data);
         $this->assertEquals($this->totalClusters, count($data['clusters']));
     }
 
-    public function testClusterDepartments() {
-        $data = $this->serviceInstance->getData();
+    public function testClusterDepartments(): void {
+        $this->serviceInstance->getData();
         $clusterData = $this->serviceInstance->getCluster('Premier and Cabinet');
         $this->assertGreaterThan(0, count($clusterData['departments']));
     }
 
-    public function testClusterExecutiveAgencies() {
-        $data = $this->serviceInstance->getData();
+    public function testClusterExecutiveAgencies(): void {
+        $this->serviceInstance->getData();
         $clusterData = $this->serviceInstance->getCluster('Premier and Cabinet');
         $this->assertGreaterThan(0, count($clusterData['executive_agencies']));
     }
 
-    public function testClusterSeparateAgencies() {
-        $data = $this->serviceInstance->getData();
+    public function testClusterSeparateAgencies(): void {
+        $this->serviceInstance->getData();
         $clusterData = $this->serviceInstance->getCluster('Premier and Cabinet');
         $this->assertGreaterThan(0, count($clusterData['separate_agencies']));
     }
 
-    public function testClusterFromDepartment() {
-        $data = $this->serviceInstance->getData();
+    public function testClusterFromDepartment(): void {
+        $this->serviceInstance->getData();
         $clusterName = $this->serviceInstance->getClusterFromDepartment('Department of Premier and Cabinet');
         $this->assertEquals('Premier and Cabinet', $clusterName);
     }
 
-    public function testGetClusterAgencies() {
-        $data = $this->serviceInstance->getData();
+    public function testGetClusterAgencies(): void {
+        $this->serviceInstance->getData();
         $clusterAgencies = $this->serviceInstance->getClusterAgencies();
         $this->assertArrayHasKey( 'Premier and Cabinet', $clusterAgencies );
         $this->assertGreaterThan(0, count($clusterAgencies['Premier and Cabinet']) );
     }
 
-    public function testGetClusterFromAgency() {
-        $data = $this->serviceInstance->getData();
+    public function testGetClusterFromAgency(): void {
+        $this->serviceInstance->getData();
         $cluster = $this->serviceInstance->getClusterFromAgency('Department of Premier and Cabinet');
         $this->assertEquals('Premier and Cabinet', $cluster );
     }
