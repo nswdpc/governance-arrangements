@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 require_once(__DIR__ . '/../src/Services/GovernanceArrangementsService.php');
 
-abstract class GovernanceArrangementsServiceTest extends TestCase
+abstract class GovernanceArrangementsServiceTestCase extends TestCase
 {
     /**
      * @var GovernanceArrangementsService

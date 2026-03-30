@@ -2,12 +2,12 @@
 
 namespace NSWDPC\GovernanceArrangements\Test;
 
-require_once(__DIR__ . '/GovernanceArrangementsServiceTest.php');
+require_once(__DIR__ . '/GovernanceArrangementsServiceTestCase.php');
 
 /**
  * Test for v20200703
  */
-class v20200703Test extends GovernanceArrangementsServiceTest
+class v20200703Test extends GovernanceArrangementsServiceTestCase
 {
     /**
      * @var float
