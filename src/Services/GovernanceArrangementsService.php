@@ -90,7 +90,7 @@ class GovernanceArrangementsService
                     . self::$sourceDirectory
                     . '/' . $dataVersion . '.yml';
         $realPath = realpath($path);
-        if ($realPath === '' || $realPath === false || !is_readable($realPath)) {
+        if ($realPath === false || !is_readable($realPath)) {
             throw new \Exception("Path '{$path}' not found or readable for {$this->dataVersion} request");
         }
 

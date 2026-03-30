@@ -23,7 +23,7 @@ class GovernanceArrangementsParseTest extends TestCase
 
         $sourceDirectory = GovernanceArrangementsService::$sourceDirectory;
         $sourcePath = realpath(__DIR__ . "/../" . $sourceDirectory);
-        if ($sourcePath === '' || $sourcePath === '0' || $sourcePath === false || !is_readable($sourcePath)) {
+        if ($sourcePath === false || !is_readable($sourcePath)) {
             throw new \Exception("source path  {$sourceDirectory} is not readable");
         }
 
