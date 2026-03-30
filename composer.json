@@ -32,5 +32,11 @@
             "NSWDPC\\GovernanceArrangements\\Services\\": "src/Services/",
             "NSWDPC\\GovernanceArrangements\\Test\\": "tests/"
         }
+    },
+    "scripts": {
+        "phpstan-analyse": "./vendor/bin/phpstan analyse --ansi --no-progress --no-interaction --configuration vendor/nswdpc/ci-files/phpstan/.phpstan.vanilla.neon src/ tests/",
+        "rector-dryrun": "./vendor/bin/rector process --dry-run --ansi --config vendor/nswdpc/ci-files/rector/.rector.vanilla.php src/ tests/",
+        "rector-process": "./vendor/bin/rector process --no-diffs --ansi --config vendor/nswdpc/ci-files/rector/.rector.vanilla.php src/ tests/",
+        "phpcsfixer-fix": "./vendor/bin/php-cs-fixer fix --ansi --no-interaction --config vendor/nswdpc/ci-files/php-cs-fixer/.php-cs-fixer.php src/ tests/"
     }
 }
