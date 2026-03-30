@@ -12,13 +12,13 @@ use Symfony\Component\Yaml\Parser as YamlParser;
  *
  * @author James
  */
-class GovernanceArrangementsService {
-
+class GovernanceArrangementsService
+{
     /**
      * Version in use for this instance
      * @var string|float|null
      */
-    protected $dataVersion = null;
+    protected $dataVersion;
 
     /**
      * The data sourced from the yml file
@@ -51,24 +51,28 @@ class GovernanceArrangementsService {
     /**
      * To get an instance of this class, call GovernanceArrangementsService::create( VERSION );
      */
-    final public function __construct($dataVersion) {
-        if(!$dataVersion) {
+    final public function __construct($dataVersion)
+    {
+        if (!$dataVersion) {
             throw new \Exception("Please provide a valid version");
         }
+
         $this->dataVersion = $dataVersion;
     }
 
     /**
      * Return an instance of this class locked to the provided data version
      */
-    public static function create($dataVersion) : self {
+    public static function create($dataVersion): self
+    {
         return new static($dataVersion);
     }
 
     /**
      * Reset the values of properties, called when a data version is changed
      */
-    public function resetValues() : void {
+    public function resetValues(): void
+    {
         $this->data = [];
         $this->clusterAgencies = [];
         $this->agencies = [];
@@ -78,16 +82,18 @@ class GovernanceArrangementsService {
      * Return the filesystem path to a YML data file
      * @throws \Exception
      */
-    public function getDataPath($dataVersion) : string {
+    public function getDataPath(string $dataVersion): string
+    {
         // the path is relative to the current file
-        $path = dirname(__FILE__)
+        $path = __DIR__
                     . '/../../'
                     . self::$sourceDirectory
                     . '/' . $dataVersion . '.yml';
         $realPath = realpath($path);
-        if(!$realPath || !is_readable($realPath)) {
+        if ($realPath === false || !is_readable($realPath)) {
             throw new \Exception("Path '{$path}' not found or readable for {$this->dataVersion} request");
         }
+
         return $realPath;
     }
 
@@ -96,14 +102,15 @@ class GovernanceArrangementsService {
      * @param bool $force if true, will ignore previously parsed data and refetch from source
      * @throws \Exception
      */
-    public function getData(bool $force = false) : array {
+    public function getData(bool $force = false): array
+    {
 
-        if(!$this->dataVersion) {
+        if (!$this->dataVersion) {
             throw new \Exception("No data version found!");
         }
 
         // Return data if already parsed
-        if(!empty($this->data[ $this->dataVersion ]) && !$force) {
+        if (!empty($this->data[ $this->dataVersion ]) && !$force) {
             return $this->data[ $this->dataVersion ];
         }
 
@@ -113,27 +120,30 @@ class GovernanceArrangementsService {
 
         // Grab parsed YML
         $yml = file_get_contents($path);
-        if($yml) {
+        if ($yml) {
             $parser = new YamlParser();
             $data = $parser->parse($yml);
-            if(!empty($data['version'])) {
-                if(empty($data['version']) || $data['version'] != $this->dataVersion) {
+            if (!empty($data['version'])) {
+                if (empty($data['version']) || $data['version'] != $this->dataVersion) {
                     throw new \Exception("Version mismatch between requested and that found in source file");
                 }
+
                 $this->data[ $this->dataVersion ] = $data;
             }
         }
 
-        if(empty($this->data[ $this->dataVersion ])) {
+        if (empty($this->data[ $this->dataVersion ])) {
             throw new \Exception("Source data is empty");
         }
+
         return $this->data[ $this->dataVersion ];
     }
 
     /**
      * Return the meta keys
      */
-    public static function getMetaKeys() : array {
+    public static function getMetaKeys(): array
+    {
         return [
             'name','version','supersedes','created','fromdate','title',
             'author','source','description'
@@ -143,27 +153,24 @@ class GovernanceArrangementsService {
     /**
      * Return the meta data from a YMLfile
      */
-    public function getMetaData() : array {
-        $meta = [];
+    public function getMetaData(): array
+    {
         $data = $this->getData();
-
-        $intersect = array_filter(
+        return array_filter(
             $data,
-            function($k) {
-                return in_array($k, self::getMetaKeys() );
-            },
+            fn ($k): bool => in_array($k, self::getMetaKeys()),
             ARRAY_FILTER_USE_KEY
         );
-        return $intersect;
     }
 
     /**
      * Retrieve all clusters and their child data
      * The return value is an array, each key is an org type, values are orgs in that type
      */
-    public function getClusters() : array {
+    public function getClusters(): array
+    {
         $data = $this->getData();
-        return !empty($data['clusters']) ? $data['clusters'] : [];
+        return empty($data['clusters']) ? [] : $data['clusters'];
     }
 
     /**
@@ -171,11 +178,13 @@ class GovernanceArrangementsService {
      * @param string $cluster e.g 'Treasury'
      * @throws \Exception
      */
-    public function getCluster(string $cluster) : array {
+    public function getCluster(string $cluster): array
+    {
         $clusters = $this->getClusters();
-        if(isset($clusters[$cluster])) {
+        if (isset($clusters[$cluster])) {
             return $clusters[$cluster];
         }
+
         throw new \Exception("Cluster {$cluster} not found");
     }
 
@@ -184,7 +193,8 @@ class GovernanceArrangementsService {
      * This returns the value from {@link self::getClusterFromAgency()}
      * @param string $department e.g 'Treasury'
      */
-    public function getClusterFromDepartment(string $department) : string {
+    public function getClusterFromDepartment(string $department): string
+    {
         return $this->getClusterFromAgency($department);
     }
 
@@ -192,21 +202,23 @@ class GovernanceArrangementsService {
      * Give an agency, find the cluster it is in
      * @param string $agency e.g 'Treasury'
      */
-    public function getClusterFromAgency(string $agency) : string {
-        if(!$agency) {
+    public function getClusterFromAgency(string $agency): string
+    {
+        if ($agency === '') {
             return '';
         }
+
         $this->getAllAgencies();
-        return isset($this->agencies[$agency]) ? $this->agencies[$agency] : '';
+        return $this->agencies[$agency] ?? '';
     }
 
     /**
      * Optionally create and return the cluster/agency data structure
      * The return value is suitable for use in a select field with
      * optgroup / option child elements
-     * @return array
      */
-    public function getClusterAgencies() : array {
+    public function getClusterAgencies(): array
+    {
         $this->getAllAgencies();
         return $this->clusterAgencies;
     }
@@ -216,15 +228,17 @@ class GovernanceArrangementsService {
      * keys are the agency, each value is a cluster name
      * @param bool $force whether to force
      */
-    public function getAllAgencies(bool $force = false) : array {
-        if(!empty($this->agencies) && !$force) {
+    public function getAllAgencies(bool $force = false): array
+    {
+        if ($this->agencies !== [] && !$force) {
             return $this->agencies;
         }
 
         // get all clusters
         $clusters = $this->getClusters();
-        $this->agencies = $this->clusterAgencies = [];
-        foreach($clusters as $clusterName => $meta) {
+        $this->agencies = [];
+        $this->clusterAgencies = [];
+        foreach ($clusters as $clusterName => $meta) {
 
             // meta is an array with a key ( org type ) values are the names of the orgs in that type
             $this->clusterAgencies[$clusterName] = [];
@@ -232,8 +246,8 @@ class GovernanceArrangementsService {
             // Store cluster keyed by clustername, values are agencies (orgs)
             array_walk(
                 $meta,
-                function( array $orgs, string $orgType ) use ($clusterName)  {
-                    foreach($orgs as $org) {
+                function (array $orgs, string $orgType) use ($clusterName): void {
+                    foreach ($orgs as $org) {
                         $this->clusterAgencies[ $clusterName ][ $org ] = $org;
                         // NB this assumes $org is unique
                         $this->agencies[ $org ] = $clusterName;
